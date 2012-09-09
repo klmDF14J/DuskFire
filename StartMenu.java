@@ -27,7 +27,7 @@ public class StartMenu extends JFrame {
 	Image icon = tk.getImage(getURL("images/Misc/Logo.png"));
 	
 	public StartMenu() {
-		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBackground(orange);
 		this.setTitle("Game :)");
 		this.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);

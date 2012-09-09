@@ -9,8 +9,7 @@ import java.net.URL;
 import javax.swing.*;
 
 
-public class MapEditor  extends JFrame implements MouseListener{
-	/*int temps[] = new int[10];*/
+public class MapEditor  extends JFrame implements MouseListener {
 	Dimension SIZE = Toolkit.getDefaultToolkit ().getScreenSize();
 
 	int SCREEN_WIDTH = SIZE.width;
@@ -223,6 +222,9 @@ public class MapEditor  extends JFrame implements MouseListener{
 		}
 		else if(fileToOpen != null) {
 			fileString = fileToOpen.toString(); 
+		}
+		else if(fileToSave != null) {
+			fileString = fileToSave.toString(); 
 		}
 		
 		this.setTitle("DuskFire Map Editor " + "  Currently Editing: " + fileString);

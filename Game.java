@@ -60,7 +60,7 @@ public class Game  extends JFrame {
 	
 	Image[] tileGfx = new Image[numberOfTiles];
 	Image icon = tk.getImage(getURL("images/Misc/Logo.png"));
-	Image Player = tk.getImage(getURL("images/Enemies/Forest/Snail.png"));
+	Image Player = tk.getImage(getURL("images/Characters/Keith.png"));
 	Image img;
 	Image Title;
 	Image background;
@@ -75,7 +75,8 @@ public class Game  extends JFrame {
 	
 	public void loadMap() {
 		if(Config.debug)System.out.println("in loadMap");
-		repaint();
+		
+		repaint();		
 		ObjectInputStream ois;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(fileToOpen));
@@ -95,7 +96,7 @@ public class Game  extends JFrame {
 		/*map[0][0] = 4;
 		map[0][20] = 4;
 		map[1][0] = 4;
-		map[1][1] = 4;*/
+		map[1][1] = 4;s*/
 	}
 /*	public void renderMap() {
 		int x, y;
@@ -172,14 +173,14 @@ public class Game  extends JFrame {
 		 if (returnVal == JFileChooser.APPROVE_OPTION) {
          fileToOpen = fc.getSelectedFile();
          loadMap();
-         playerSpawn();
+         
          }
 		 else if(returnVal == JFileChooser.CANCEL_OPTION) {
 			 dispose();
 		 }
 		 this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		 add(b4);
-		 
+		 playerSpawn();
 		
 	}
 	public void playerSpawn() {
@@ -189,9 +190,10 @@ public class Game  extends JFrame {
 			if(Config.debug)System.out.println("current map" + map[player_X][player_Y]);
 			if(Config.debug)System.out.println("below map" + map[player_X][player_Y+1]);
 			
-			if (checkSolid(map[player_X][player_Y+1]) == true) {
+			if (checkSolid(map[player_X][player_Y+2])) {
 				if(Config.debug)System.out.println("I: " + i);
 				if(Config.debug)System.out.println("player_Y: " + player_Y);
+				if(Config.debug)System.out.println("Doing break");
 				break;
 				
 			}
@@ -249,6 +251,7 @@ public class Game  extends JFrame {
 				g.drawImage(img, xpos, ypos, this);
 				
 				g.drawImage(Player, player_X*tileSize + xOffset, player_Y*tileSize + yOffset, this);
+				
 				}
 			if(Config.debugMap)System.out.println();
 			}
@@ -302,14 +305,15 @@ public class Game  extends JFrame {
 		if(key == 119) {
 			
 			System.out.println("Up");
-			if (checkSolid(map[player_X][player_Y-1])) {
+			if (checkSolid(map[player_X][player_Y-1]) == false) {
 				player_Y --;
 				//updatePlayer(g,player_X*tileSize + xOffset,player_Y*tileSize + yOffset);
 				repaint();
 			}
 		}
 		if(key == 115) {
-			if (checkSolid(map[player_X][player_Y+1])) {
+			System.out.println("Down");
+			if (checkSolid(map[player_X][player_Y+2]) == false) {
 				player_Y ++;
 				//updatePlayer(g,player_X*tileSize + xOffset,player_Y*tileSize + yOffset);
 				repaint();
@@ -319,7 +323,7 @@ public class Game  extends JFrame {
 		if(key == 97) {
 			
 			System.out.println("Left");
-			if (checkSolid(map[player_X-1][player_Y])) {
+			if (checkSolid(map[player_X-1][player_Y]) == false & checkSolid(map[player_X-1][player_Y+1]) == false) {
 				player_X --;
 				repaint();
 			}
@@ -327,7 +331,7 @@ public class Game  extends JFrame {
 		if(key == 100) {
 			
 			System.out.println("Right");
-			if (checkSolid(map[player_X+1][player_Y])) {
+			if (checkSolid(map[player_X+1][player_Y]) == false & checkSolid(map[player_X+1][player_Y+1]) == false) {
 				player_X ++;
 				repaint();
 			}
@@ -337,11 +341,13 @@ public class Game  extends JFrame {
 	public boolean checkSolid(int tileNumber) {
 		for(int i = 0;i < nonSolidBlock.length; i++) {
 			if(nonSolidBlock[i] == tileNumber) {
-				return true;
+				System.out.println("Tile Number: " + tileNumber + " is not solid");
+				return false;
 			}
+			System.out.println("Tile Number: " + tileNumber + " is solid");
 		}
 		
-		return false;
+		return true;
 		
 	}
 	
